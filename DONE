@@ -1,0 +1,72 @@
+https://colab.research.google.com/drive/1omfzAQfiYZygxrJX8M19z3CGuQ7ie1wi?usp=sharing
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+df=pd.read_csv('/content/Nigeria economy kpis.csv') #loading the csv file
+
+df.head(5) #display the first 5 data
+
+#display the tail of our data
+df.tail(5)
+
+df.info() #shows the details of our dataset 
+
+3. challenge :perfom descriptive statistic analysis on numeric data
+
+df.describe() #describe the data
+
+4.  rename the dataset
+
+print(list(df.columns))
+
+df.rename(columns={'Unemployment':'Unemployment rate',
+                   'Government debt':'Government dept rate',
+                   'Agriculture':'Agricultute gdp(naira)',
+                   'Industry':'Industry gdp(naira)',
+                   'Services':'Services gdp(naira)',
+                   'Leadership':'President'},inplace=True)
+
+df.head()
+
+5. APPLY TRANSFORMATIONS ON MULTIPLE COLUMS
+
+
+
+df['inflation rate']=df['Inflation rate'].apply(lambda x:x*100) #transforms to 100%
+df['Government dept rate']=df['Government dept rate'].apply(lambda x:x*100)
+df['Unemployment rate']=df['Unemployment rate'].apply(lambda x:x*100)
+
+df.head()
+
+6. aply basic filters
+
+df.loc[df['President']=='Olusegun obasanjo']
+print('' )
+
+df.loc[df['Inflation rate']==df['Inflation rate'].max()]
+
+df.loc[df['Inflation rate']==df['Inflation rate'].min()]
+
+7.GROUP THE DATA RECORD WITH A SPECIFIC KEY
+
+df.groupby('President')['Unemployment rate'].mean()
+
+8. BULD SIMOLE VISUALIZATIONS TO ANALYSE THE OUTPUT
+
+plt.xlabel('Year')
+plt.ylabel('Unemployment rate')
+plt.title('Unemployment rate over the years from 1990 to 2020')
+df.groupby('Year')['Unemployment rate'].mean().plot()
+
+plt.xlabel('Year')
+plt.ylabel('Unemployment rate')
+plt.title('Unemployment rate during each leaders era')
+df.groupby('President')['Unemployment rate'].mean().plot(kind='bar')
+
+plt.xlabel('Year')
+plt.ylabel('Unemployment rate')
+plt.title('Unemployment rate during each leaders era')
+df.groupby('President')['Unemployment rate'].mean().plot(kind='barh')
